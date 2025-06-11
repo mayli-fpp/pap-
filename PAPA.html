@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Feliz Cumpleaños Papá - Neon y Confeti</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #000000;
+    color: #fff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    position: relative;
+  }
+  #particles-canvas {
+    position: fixed;
+    z-index: 0;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: transparent;
+  }
+  main, h1 {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Neon color transitions for typewriter letters */
+  h1 {
+    font-weight: 900;
+    font-size: 4.2rem;
+    letter-spacing: 0.18em;
+    text-align: center;
+    margin: 60px 20px 60px;
+    min-height: 5.2rem;
+    user-select: none;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  h1 span {
+    font-weight: 900;
+    color: #00e5ff; /* default neon cyan */
+    text-shadow:
+      0 0 7px #00e5ff,
+      0 0 10px #00e5ff,
+      0 0 21px #b5eaff,
+      0 0 42px #4fd6ff,
+      0 0 82px #26acff;
+    animation: neonColorCycle 6s linear infinite;
+    display: inline-block;
+  }
+  h1 span:nth-child(3n) {
+    animation-delay: 0s;
+  }
+  h1 span:nth-child(3n+1) {
+    animation-delay: 2s;
+  }
+  h1 span:nth-child(3n+2) {
+    animation-delay: 4s;
+  }
+
+  @keyframes neonColorCycle {
+    0%, 100% {
+      color: #00e5ff; /* Neon Blue */
+      text-shadow:
+        0 0 7px #00e5ff,
+        0 0 10px #00e5ff,
+        0 0 21px #b5eaff,
+        0 0 42px #4fd6ff,
+        0 0 82px #26acff;
+    }
+    33% {
+      color: #b200f3; /* Neon Purple */
+      text-shadow:
+        0 0 7px #b200f3,
+        0 0 10px #b200f3,
+        0 0 21px #d98cff,
+        0 0 42px #bb47ff,
+        0 0 82px #a726ff;
+    }
+    66% {
+      color: #ffee00; /* Neon Yellow */
+      text-shadow:
+        0 0 7px #ffee00,
+        0 0 10px #ffee00,
+        0 0 21px #fffb72,
+        0 0 42px #fff748,
+        0 0 82px #fbf123;
+    }
+  }
+
+  .cursor {
+    display: inline-block;
+    background: #00e5ff;
+    width: 3px;
+    height: 1.3em;
+    vertical-align: bottom;
+    margin-left: 5px;
+    border-radius: 2px;
+    animation: blink 1.2s steps(2, start) infinite;
+    box-shadow:
+      0 0 8px #00e5ff,
+      0 0 20px #00e5ff;
+    position: relative;
+    top: 3px;
+  }
+  @keyframes blink {
+    0%,50% { opacity: 1;}
+    51%,100% { opacity: 0;}
+  }
+
+  /* Main container */
+  main {
+    max-width: 900px;
+    margin: 0 auto 48px;
+    padding: 40px 36px 56px;
+    background: rgba(10, 10, 10, 0.7);
+    border-radius: 32px;
+    box-shadow:
+      0 0 48px rgba(0, 229, 255, 0.7),
+      inset 0 0 36px rgba(255 255 255 / 0.15);
+    color: #b0b0b0;
+    user-select: text;
+    backdrop-filter: saturate(180%) blur(15px);
+    animation: fadeSlideUp 1.5s ease forwards;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #00e5ff;
+  }
+  @keyframes fadeSlideUp {
+    0% {opacity:0; transform: translateY(25px);}
+    100% {opacity:1; transform: translateY(0);}
+  }
+
+  /* Photos Section */
+  #photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 48px;
+    perspective: 700px;
+  }
+  #photos img {
+    border-radius: 24px;
+    max-width: 180px;
+    height: auto;
+    cursor: default;
+    transition:
+      transform 0.4s cubic-bezier(0.4,0,0.2,1),
+      box-shadow 0.4s ease;
+    filter:
+      drop-shadow(0 0 12px #00e5ff);
+    user-select: none;
+    animation: fadeSlideUp 1.5s ease forwards;
+    box-shadow:
+      0 0 20px #00e5ff;
+  }
+  #photos img:hover,
+  #photos img:focus {
+    transform: scale(1.12) rotate(3deg);
+    box-shadow:
+      0 0 40px #00e5ff, 0 0 15px #00cfff;
+    outline: 3px solid #00e5ff;
+    outline-offset: 6px;
+    z-index: 30;
+    position: relative;
+  }
+  #photos img:focus {
+    outline-offset: 2px;
+  }
+  #photos img {
+    --mouse-x: 0;
+    --mouse-y: 0;
+  }
+
+  /* Message Section */
+  #personal-message {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    background: rgba(15, 15, 15, 0.75);
+    padding: 32px 30px;
+    border-radius: 24px;
+    box-shadow:
+      0 0 20px #ffee00,
+      inset 0 0 15px #ffeb7b;
+    color: #fffbcc;
+    font-weight: 600;
+    text-shadow:
+      0 0 4px #ffee00;
+    user-select: text;
+    position: relative;
+    overflow: visible;
+    animation: gentleGlow 4s ease-in-out infinite;
+  }
+  @keyframes gentleGlow {
+    0%, 100% {
+      box-shadow:
+        0 0 20px #ffee00,
+        inset 0 0 40px #fffa80;
+    }
+    50% {
+      box-shadow:
+        0 0 38px #fffda8,
+        inset 0 0 48px #fffde2;
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    h1 {
+      font-size: 3.2rem;
+      letter-spacing: 0.14em;
+      min-height: 4.2rem;
+      margin: 50px 20px 50px;
+    }
+    main {
+      padding: 35px 30px 50px;
+      border-radius: 28px;
+      margin-bottom: 40px;
+      border-color: #00bbff;
+    }
+    #photos {
+      gap: 24px;
+    }
+    #photos img {
+      max-width: 140px;
+      filter:
+        drop-shadow(0 0 10px #00bbff);
+      box-shadow: 0 0 15px #00bbff;
+    }
+    #personal-message {
+      font-size: 1.2rem;
+      padding: 26px 24px;
+      border-radius: 28px;
+      box-shadow:
+        0 0 18px #ffee00,
+        inset 0 0 25px #ffea90;
+    }
+  }
+
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2.6rem;
+      letter-spacing: 0.12em;
+      min-height: 3.6rem;
+      margin: 40px 16px 40px;
+    }
+    main {
+      padding: 28px 24px 44px;
+      border-radius: 24px;
+      margin-bottom: 32px;
+    }
+    #photos {
+      gap: 20px;
+      justify-content: center;
+    }
+    #photos img {
+      max-width: 120px;
+      filter:
+        drop-shadow(0 0 8px #00a5db);
+      box-shadow: 0 0 12px #00a5db;
+    }
+    #personal-message {
+      font-size: 1.05rem;
+      padding: 22px 20px;
+      border-radius: 24px;
+      box-shadow:
+        0 0 15px #ffd60a,
+        inset 0 0 20px #ffe680;
+    }
+  }
+
+  @media (max-width: 400px) {
+    h1 {
+      font-size: 2.1rem;
+      letter-spacing: 0.1em;
+      min-height: 3.0rem;
+      margin: 35px 12px 35px;
+    }
+    #photos {
+      gap: 16px;
+    }
+    #photos img {
+      max-width: 100px;
+      filter:
+        drop-shadow(0 0 6px #0090bf);
+      box-shadow: 0 0 10px #0090bf;
+    }
+    #personal-message {
+      font-size: 0.95rem;
+      padding: 18px 16px;
+      border-radius: 20px;
+      box-shadow:
+        0 0 10px #ffcf17,
+        inset 0 0 15px #ffeb80;
+    }
+  }
+</style>
+</head>
+<body>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <h1 aria-label="Feliz cumpleaños papá">
+    <span id="typewriter-text"></span><span class="cursor" aria-hidden="true"></span>
+  </h1>
+
+  <main role="main" aria-labelledby="main-heading">
+    <!-- 
+      Aquí puedes agregar tus fotos y mensaje directamente en el código fuente.
+      Para agregar fotos, inserta etiquetas <img> dentro del contenedor #photos con la URL o ruta a la imagen.
+      Para el mensaje, edita el contenido del <p> con id="personal-message".
+    -->
+    <section id="photos" aria-label="Fotos para papá">
+      <!-- Ejemplo de fotos añadidas -->
+      <img src="https://placehold.co/180x180?text=Foto+Especial+1" alt="Foto especial para papá, con tonos cálidos y feliz" tabindex="0" />
+      <img src="https://placehold.co/180x180?text=Foto+Especial+2" alt="Cumpleaños papá con familia celebrando juntos" tabindex="0" />
+      <!-- Agrega más fotos aquí -->
+    </section>
+
+    <section id="personal-message" aria-label="Mensaje personal para papá">
+      <p>
+        Querido papá, en tu día especial quiero desearte toda la felicidad del mundo y agradecerte por todo tu amor y apoyo incondicional. Que este nuevo año esté lleno de salud, alegría y momentos inolvidables. ¡Te quiero mucho!
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Typewriter effect with neon color cycling letters
+    const text = "Feliz cumpleaños, papá";
+    const container = document.getElementById('typewriter-text');
+    let i = 0;
+
+    function createNeonSpan(letter, delay) {
+      const span = document.createElement('span');
+      span.textContent = letter;
+      span.style.animation = `neonCycle 6s linear infinite`;
+      span.style.animationDelay = delay + 's';
+      span.style.fontWeight = '900';
+      span.style.display = 'inline-block';
+      return span;
+    }
+
+    function typeWriter() {
+      if (i < text.length) {
+        const delay = (i % 3) * 2; // cycle through 0s, 2s, 4s delay for neon effect
+        const span = createNeonSpan(text.charAt(i), delay);
+        container.appendChild(span);
+        i++;
+        setTimeout(typeWriter, 140);
+      }
+    }
+
+    // Add neon color cycle keyframes dynamically
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = `
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes neonCycle {
+        0% {
+          color: #00dfff;
+          text-shadow:
+            0 0 6px #00dfff,
+            0 0 12px #00dfff,
+            0 0 24px #70eaff;
+        }
+        33% {
+          color: #b14cff;
+          text-shadow:
+            0 0 6px #b14cff,
+            0 0 12px #b14cff,
+            0 0 24px #d47bff;
+        }
+        66% {
+          color: #fff630;
+          text-shadow:
+            0 0 6px #fff630,
+            0 0 12px #fff630,
+            0 0 24px #fff799;
+        }
+        100% {
+          color: #00dfff;
+          text-shadow:
+            0 0 6px #00dfff,
+            0 0 12px #00dfff,
+            0 0 24px #70eaff;
+        }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      typeWriter();
+    });
+
+    // Particle confetti with colors blue, purple, yellow moving
+
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    // Confetti colors neon blue, purple, yellow
+    const confettiColors = [
+      '#00dfff', // neon blue
+      '#b14cff', // neon purple
+      '#fff630'  // neon yellow
+    ];
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.radius = Math.random() * 4 + 2;
+        this.speedX = (Math.random() - 0.5) * 1.2;
+        this.speedY = - (Math.random() * 1.5 + 0.5);
+        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        this.opacity = Math.random() * 0.8 + 0.4;
+        this.tilt = Math.random() * 15;
+        this.tiltAngle = 0;
+        this.tiltSpeed = Math.random() * 0.1 + 0.05;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.tiltAngle += this.tiltSpeed;
+        this.tilt = Math.sin(this.tiltAngle) * 15;
+
+        if (this.y < -20 || this.x < -20 || this.x > width + 20) {
+          this.x = Math.random() * width;
+          this.y = height + 20;
+          this.speedX = (Math.random() - 0.5) * 1.2;
+          this.speedY = - (Math.random() * 1.5 + 0.5);
+          this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+          this.opacity = Math.random() * 0.8 + 0.4;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.lineWidth = this.radius;
+        ctx.strokeStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        // draw tilted line to simulate confetti
+        ctx.moveTo(this.x + this.tilt, this.y);
+        ctx.lineTo(this.x + this.tilt + this.radius * 0.8, this.y + this.radius / 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * devicePixelRatio;
+      canvas.height = height * devicePixelRatio;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      particles = [];
+      let count = Math.floor(width / 8);
+      for(let i=0; i<count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for(let p of particles) {
+        p.update();
+        p.draw();
+      }
+      requestAnimationFrame(animateParticles);
+    }
+
+    resize();
+    animateParticles();
+    window.addEventListener('resize', resize);
+
+    // Photo tilt effect by mouse movement
+    const photos = document.querySelectorAll('#photos img');
+    photos.forEach(photo => {
+      photo.style.setProperty('--mouse-x', 0);
+      photo.style.setProperty('--mouse-y', 0);
+
+      photo.addEventListener('mousemove', e => {
+        const rect = photo.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width; // 0 to 1
+        const y = (e.clientY - rect.top) / rect.height; // 0 to 1
+        // Center to -0.5 to 0.5
+        const mx = (x - 0.5);
+        const my = (y - 0.5);
+        photo.style.setProperty('--mouse-x', mx.toFixed(2));
+        photo.style.setProperty('--mouse-y', (-my).toFixed(2));
+      });
+      photo.addEventListener('mouseleave', e => {
+        photo.style.setProperty('--mouse-x', 0);
+        photo.style.setProperty('--mouse-y', 0);
+      });
+    });
+  </script>
+</body>
+</html>
+
